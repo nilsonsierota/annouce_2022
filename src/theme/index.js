@@ -1,19 +1,23 @@
 export default {
   COLORS: {
-    BACKGROUND: "#F3F2F8",
+    PRIMARY: "#4CAD73",
+    SECONDARY: "#BDBDBD",
+    THIRD: "#333333",
 
-    PRIMARY: "#6100FF",
-    SECONDARY: "#FF366A",
-
-    TEXT: "#383B43",
-    SUBTEXT: "#8D919E",
+    TITLE: "#DDDDDD",
+    TEXT: "#4CAD73",
+    SUBTEXT: "#FFFFFF",
 
     WHITE: "#FFFFFF",
-    BORDER: "#C5CADA",
+    GREEN: "#4CAD73",
+    BLUE: "#2D9CDB",
+    BLACK: "#333333",
+    GREY: "#BDBDBD",
   },
 
   FONTS: {
-    TITLE: "Inter_700Bold",
-    TEXT: "Inter_400Regular",
+    TITLE: "Inter_600Regular",
+    TEXT: "Inter_700Regular",
+    SUBTEXT: "Inter_500Medium",
   },
 };

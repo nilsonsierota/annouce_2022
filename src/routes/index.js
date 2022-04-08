@@ -17,7 +17,8 @@ export function Routes() {
 
   return (
     <NavigationContainer>
-      {user ? <HomeRoutes /> : <AuthRoutes />}
+      {/* {user ? <HomeRoutes /> : <AuthRoutes />} */}
+      <HomeRoutes />
     </NavigationContainer>
   );
 }

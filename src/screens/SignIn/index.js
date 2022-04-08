@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { LinearGradient } from "expo-linear-gradient";
+import { Alert } from "react-native-web";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import auth from "@react-native-firebase/auth";
 
 import { styles } from "./styles";
-import { Alert } from "react-native-web";
 
 export function SignIn() {
   const [email, setEmail] = useState("");
@@ -31,12 +31,15 @@ export function SignIn() {
       .then(() =>
         Alert.alert("Redefinir senha", "Enviamos um e-mail para voce.")
       )
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setIsLoading(false);
+        console.log(error);
+      });
   }
 
   return (
-    <LinearGradient style={styles.container} colors={["orange", "green"]}>
-      <Text style={styles.title}>{"Ola Novamente.\nBem vindo de volta."}</Text>
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.title}>{"Login"}</Text>
 
       <TextInput
         style={styles.textInput}
@@ -53,20 +56,23 @@ export function SignIn() {
         onChangeText={setPassword}
       ></TextInput>
 
-      <TouchableOpacity style={styles.button} onPress={handleSignIn}>
-        <Text style={styles.buttonText}>Entrar</Text>
+      <Text style={styles.forgotenText} onPress={handleForgotPassword}>
+        Esqueci a senha
+      </Text>
+
+      <TouchableOpacity style={styles.buttonLogin} onPress={handleSignIn}>
+        <Text style={styles.textLogin}>Login</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate("register")}
-      >
-        <Text style={styles.buttonText}>Registrar</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={handleForgotPassword}>
-        <Text style={styles.buttonText}>Esqueci a senha</Text>
-      </TouchableOpacity>
-    </LinearGradient>
+      <View style={styles.texts}>
+        <Text>Nao tem uma conta?</Text>
+        <Text
+          style={styles.registerText}
+          onPress={() => navigation.navigate("register")}
+        >
+          Registrar
+        </Text>
+      </View>
+    </SafeAreaView>
   );
 }

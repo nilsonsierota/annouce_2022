@@ -8,33 +8,29 @@ import firestore from "@react-native-firebase/firestore";
 import { styles } from "./styles";
 import { Alert } from "react-native-web";
 
-export function AnnounceCreate() {
+export function AnnounceDescription() {
   const [loading, setIsLoading] = useState(false);
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState(0);
-  const [title, setTitle] = useState("");
 
   const navigation = useNavigation();
 
-  function handleNewAnnounce() {
-    setIsLoading(true);
+  useEffect(() => {
+    setIsLoading(false);
 
-    firestore()
+    const subscriber = firestore()
       .collection("announce")
-      .add({
-        title,
-        description,
-        price,
-        status: "active",
-        created_at: firestore.FieldValue.serverTimestamp(),
-      })
-      .then(() => Alert.alert("Anuncio criado com Sucesso!"))
-      .catch((error) => console.log(error))
-      .finally(() => {
+      .where("status", "==", status)
+      .onSnapshot((querySnapshot) => {
+        const data = querySnapshot.docs.map((doc) => {
+          return {
+            id: doc.id,
+            ...doc.data(),
+          };
+        });
+        setAnnounces(data);
         setIsLoading(false);
-        navigation.navigate("home");
       });
-  }
+    return () => subscriber;
+  }, []);
 
   return (
     <View style={styles.container}>
