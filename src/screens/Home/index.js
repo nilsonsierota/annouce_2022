@@ -4,9 +4,9 @@ import {
   Text,
   TouchableOpacity,
   FlatList,
-  ActiveIndicator,
   Image,
   TextInput,
+  ActivityIndicator,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -20,6 +20,7 @@ export function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [announces, setAnnounces] = useState([]);
   const [status, setStatus] = useState("active");
+  const [category, setCategory] = useState("");
 
   const navigation = useNavigation();
 
@@ -27,16 +28,12 @@ export function Home() {
     auth().signOut();
   }
 
-  function handleAnnouceDescription() {
-    navigation.navigate("announce_create");
-  }
-
   useEffect(() => {
     setIsLoading(false);
 
     const subscriber = firestore()
       .collection("announce")
-      .where("status", "==", status)
+      .where("status", "==", status && "category", "==", category)
       .onSnapshot((querySnapshot) => {
         const data = querySnapshot.docs.map((doc) => {
           return {
@@ -59,22 +56,36 @@ export function Home() {
         ></TextInput>
 
         <View style={styles.types}>
-          <TouchableOpacity style={styles.typesText}>
-            <Text>Tipo 1</Text>
+          <TouchableOpacity
+            style={styles.typesText}
+            onPress={() => setCategory("")}
+          >
+            <Text>Todos</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.typesText}>
-            <Text>Tipo 2</Text>
+
+          <TouchableOpacity
+            style={styles.typesText}
+            onPress={() => setCategory("products")}
+          >
+            <Text>Produtos</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.typesText}>
-            <Text>Tipo 3</Text>
+
+          <TouchableOpacity
+            style={styles.typesText}
+            onPress={() => setCategory("services")}
+          >
+            <Text>Serviços</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.typesText}>
-            <Text>Tipo 4</Text>
+          <TouchableOpacity
+            style={styles.typesText}
+            onPress={() => setCategory("houses")}
+          >
+            <Text>Imoveis</Text>
           </TouchableOpacity>
         </View>
 
         {isLoading ? (
-          <ActiveIndicator />
+          <ActivityIndicator />
         ) : (
           <FlatList
             style={styles.list}
@@ -82,17 +93,26 @@ export function Home() {
             keyExtractor={(item) => item.id}
             numColumns={2}
             renderItem={({ item }) => (
-              <View style={styles.announces} onClick={handleAnnouceDescription}>
+              <TouchableOpacity
+                style={styles.announces}
+                onPress={() =>
+                  navigation.navigate("announce_description", {
+                    item,
+                  })
+                }
+              >
                 <Image style={styles.announcesImage} source={item.image} />
                 <Text style={styles.announcesText}>{item.title}</Text>
                 <Text style={styles.announcesPrice}>{item.price}</Text>
-              </View>
+                <Text style={styles.announcesCategory}>{item.category}</Text>
+              </TouchableOpacity>
             )}
             contentContainerStyle={{ paddingBottom: 100 }}
             showsVerticalScrollIndicator={false}
           />
         )}
       </View>
+
       <View style={styles.buttons}>
         <TouchableOpacity
           style={styles.button}

@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import theme from "../../theme";
 
 export const styles = StyleSheet.create({
   container: {
@@ -13,31 +14,33 @@ export const styles = StyleSheet.create({
     lineHeight: 40,
   },
   button: {
-    width: 250,
+    width: 130,
     height: 40,
     marginTop: 10,
-    backgroundColor: "orange",
+    backgroundColor: theme.COLORS.PRIMARY,
     justifyContent: "center",
   },
   buttons: {
     justifyContent: "space-between",
+    flexDirection: "row",
+    width: 300,
   },
   buttonText: {
     textAlign: "center",
   },
   textInput: {
-    width: 250,
+    width: 300,
     height: 40,
     textAlign: "center",
-    borderColor: "black",
+    borderColor: theme.COLORS.BLACK,
     borderWidth: 1,
     marginTop: 5,
   },
   textDescription: {
-    width: 250,
+    width: 300,
     height: 200,
     textAlign: "center",
-    borderColor: "black",
+    borderColor: theme.COLORS.BLACK,
     borderWidth: 1,
     marginTop: 5,
   },

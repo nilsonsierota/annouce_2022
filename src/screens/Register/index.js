@@ -43,16 +43,16 @@ export function Register() {
         onChangeText={setPassword}
       ></TextInput>
 
-      <View style={styles.buttons}>
+      <View style={styles.texts}>
         <TouchableOpacity style={styles.button} onPress={handleRegister}>
           <Text style={styles.buttonText}>Registrar</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate("signIn")}
+          onPress={() => navigation.navigate("home")}
         >
-          <Text style={styles.buttonText}>Cancelar</Text>
+          <Text style={styles.registerText}>Cancelar</Text>
         </TouchableOpacity>
       </View>
     </LinearGradient>

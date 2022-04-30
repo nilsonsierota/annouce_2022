@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Alert } from "react-native-web";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { styles } from "./styles";
@@ -14,7 +13,7 @@ export function GetStart() {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>{"Nome do Aplicativo"}</Text>
-      <View style={styles.image}></View>
+
       <View style={styles.buttons}>
         <TouchableOpacity
           style={styles.buttonLogin}
