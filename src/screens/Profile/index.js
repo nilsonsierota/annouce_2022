@@ -16,11 +16,12 @@ import firestore from "@react-native-firebase/firestore";
 
 import { styles } from "./styles.js";
 
-export function Home() {
+export function Profile() {
   const [isLoading, setIsLoading] = useState(false);
   const [announces, setAnnounces] = useState([]);
   const [status, setStatus] = useState("active");
   const [category, setCategory] = useState(null);
+  const [user, setUser] = useState(null);
 
   const navigation = useNavigation();
 
@@ -29,11 +30,25 @@ export function Home() {
   }
 
   useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(setUser);
+
+    return subscriber;
+  }, []);
+
+  useEffect(() => {
     setIsLoading(false);
 
     const subscriber = firestore()
       .collection("announce")
-      .where("status", "==", status && "category", "==", category)
+      .where(
+        "status",
+        "==",
+        status && "category",
+        "==",
+        category && "user",
+        "==",
+        user
+      )
       .onSnapshot((querySnapshot) => {
         const data = querySnapshot.docs.map((doc) => {
           return {
@@ -111,6 +126,12 @@ export function Home() {
             showsVerticalScrollIndicator={false}
           />
         )}
+      </View>
+
+      <View style={styles.buttons}>
+        <TouchableOpacity style={styles.button} onPress={handleSignOut}>
+          <Text style={styles.buttonText}>Logout</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
